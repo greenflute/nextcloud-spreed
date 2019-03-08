@@ -454,7 +454,7 @@ var spreedPeerConnectionTable = [];
 				// Initialize ice restart counter for peer
 				spreedPeerConnectionTable[peer.id] = 0;
 
-				peer.pc.on('iceConnectionStateChange', function () {
+				peer.pc.addEventListener('iceconnectionstatechange', function () {
 					var userId = spreedMappingTable[peer.id];
 
 					switch (peer.pc.iceConnectionState) {
@@ -515,8 +515,8 @@ var spreedPeerConnectionTable = [];
 										videoView.setConnectionStatus(OCA.Talk.Views.VideoView.ConnectionStatus.DISCONNECTED_LONG);
 
 										if (spreedPeerConnectionTable[peer.id] < 5) {
-											if (peer.pc.pc.localDescription.type === 'offer' &&
-												peer.pc.pc.signalingState === 'stable') {
+											if (peer.pc.localDescription.type === 'offer' &&
+												peer.pc.signalingState === 'stable') {
 												spreedPeerConnectionTable[peer.id] ++;
 												console.log('ICE restart.');
 												peer.icerestart();
@@ -535,8 +535,8 @@ var spreedPeerConnectionTable = [];
 								if (spreedPeerConnectionTable[peer.id] < 5) {
 									videoView.setConnectionStatus(OCA.Talk.Views.VideoView.ConnectionStatus.FAILED);
 
-									if (peer.pc.pc.localDescription.type === 'offer' &&
-										peer.pc.pc.signalingState === 'stable') {
+									if (peer.pc.localDescription.type === 'offer' &&
+										peer.pc.signalingState === 'stable') {
 										spreedPeerConnectionTable[peer.id] ++;
 										console.log('ICE restart.');
 										peer.icerestart();
@@ -556,10 +556,6 @@ var spreedPeerConnectionTable = [];
 					}
 
 					OCA.SpreedMe.speakers.updateVideoContainerDummyIfLatestSpeaker(peer.id);
-				});
-
-				peer.pc.on('PeerConnectionTrace', function (event) {
-					console.log('trace', event);
 				});
 			},
 			// The nick name below the avatar is distributed through the
