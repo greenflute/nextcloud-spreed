@@ -141,7 +141,7 @@ Peer.prototype.handleMessage = function (message) {
 	} else if (message.type === 'unmute') {
 		this.parent.emit('unmute', {id: message.from, name: message.payload.name});
 	} else if (message.type === 'endOfCandidates') {
-		this.pc.addIceCandidate('');
+		this.pc.addIceCandidate(undefined);
 	} else if (message.type === 'unshareScreen') {
 		this.parent.emit('unshareScreen', {id: message.from});
 		this.end();
