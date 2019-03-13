@@ -1567,7 +1567,7 @@ Peer.prototype.handleMessage = function (message) {
       name: message.payload.name
     });
   } else if (message.type === 'endOfCandidates') {
-    this.pc.addIceCandidate(undefined);
+    this.pc.addIceCandidate('');
   } else if (message.type === 'unshareScreen') {
     this.parent.emit('unshareScreen', {
       id: message.from
