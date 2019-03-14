@@ -43,12 +43,13 @@ use OCP\AppFramework\OCSController;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Comments\IComment;
 use OCP\IL10N;
-use OCP\ILogger;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserManager;
 use OCP\IGroup;
 use OCP\IGroupManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 class RoomController extends OCSController {
 	/** @var string|null */
@@ -65,6 +66,8 @@ class RoomController extends OCSController {
 	private $guestManager;
 	/** @var ChatManager */
 	private $chatManager;
+	/** @var EventDispatcherInterface */
+	private $dispatcher;
 	/** @var MessageParser */
 	private $messageParser;
 	/** @var ITimeFactory */
@@ -81,6 +84,7 @@ class RoomController extends OCSController {
 								Manager $manager,
 								GuestManager $guestManager,
 								ChatManager $chatManager,
+								EventDispatcherInterface $dispatcher,
 								MessageParser $messageParser,
 								ITimeFactory $timeFactory,
 								IL10N $l10n) {
@@ -92,6 +96,7 @@ class RoomController extends OCSController {
 		$this->manager = $manager;
 		$this->guestManager = $guestManager;
 		$this->chatManager = $chatManager;
+		$this->dispatcher = $dispatcher;
 		$this->messageParser = $messageParser;
 		$this->timeFactory = $timeFactory;
 		$this->l10n = $l10n;
@@ -105,6 +110,10 @@ class RoomController extends OCSController {
 	 * @return DataResponse
 	 */
 	public function getRooms(): DataResponse {
+		$this->dispatcher->dispatch(self::class . '::preGetRooms', new GenericEvent(null, [
+			'userId' => $this->userId,
+		]));
+
 		$rooms = $this->manager->getRoomsForParticipant($this->userId, true);
 
 		$return = [];

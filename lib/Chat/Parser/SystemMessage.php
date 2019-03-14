@@ -99,7 +99,9 @@ class SystemMessage {
 				sha1($participant->getSessionId()) === $parsedParameters['actor']['id'];
 		}
 
-		if ($message === 'conversation_created') {
+		if ($message === 'changelog') {
+			$parsedMessage = $parameters;
+		} else if ($message === 'conversation_created') {
 			$parsedMessage = $this->l->t('{actor} created the conversation');
 			if ($currentUserIsActor) {
 				$parsedMessage = $this->l->t('You created the conversation');

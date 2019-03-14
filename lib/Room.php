@@ -44,6 +44,7 @@ class Room {
 	public const ONE_TO_ONE_CALL = 1;
 	public const GROUP_CALL = 2;
 	public const PUBLIC_CALL = 3;
+	public const CHANGELOG_CONVERSATION = 4;
 
 	public const PARTICIPANT_REMOVED = 'remove';
 	public const PARTICIPANT_LEFT = 'leave';

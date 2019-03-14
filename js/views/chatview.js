@@ -524,6 +524,11 @@
 				if (model && model.get('actorType') === 'bots') {
 					$(this).imageplaceholder('>_', $(this).data('displayname'), 32);
 					$(this).css('background-color', '#363636');
+				} else if (model && model.get('actorType') === 'guests' &&
+					model.get('actorId') === 'changelog') {
+					// $(this).imageplaceholder('Q', $(this).data('displayname'), 32);
+					// $(this).css('background-color', '#0082C9');
+					$(this).addClass('icon icon-changelog');
 				} else {
 					setAvatar($(this), 32);
 				}
