@@ -38,6 +38,6 @@ class Changelog {
 		}
 
 		$l = $chatMessage->getL10n();
-		$chatMessage->setActor('guests', 'changelog', $l->t('Talk updates ✅'));
+		$chatMessage->setActor('bots', 'changelog', $l->t('Talk updates ✅'));
 	}
 }
